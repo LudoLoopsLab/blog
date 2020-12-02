@@ -7,6 +7,7 @@ from django.views.i18n import set_language
 
 from mezzanine.core.views import direct_to_template
 from mezzanine.conf import settings
+from mezzanine.pages.views import page
 
 # Uncomment to use blog as home page. See also urlpatterns section below.
 # from mezzanine.blog import views as blog_views
@@ -28,6 +29,7 @@ if settings.USE_MODELTRANSLATION:
         url('^i18n/$', set_language, name='set_language'),
     ]
 
+
 urlpatterns += [
     # We don't want to presume how your homepage works, so here are a
     # few patterns you can use to set it up.
@@ -39,7 +41,7 @@ urlpatterns += [
     # one homepage pattern, so if you use a different one, comment this
     # one out.
 
-    url("^$", direct_to_template, {"template": "index.html"}, name="home"),
+    # url("^$", direct_to_template, {"template": "index.html"}, name="home"),
 
     # HOMEPAGE AS AN EDITABLE PAGE IN THE PAGE TREE
     # ---------------------------------------------
@@ -56,6 +58,8 @@ urlpatterns += [
     # NOTE: Don't forget to import the view function too!
 
     # url("^$", mezzanine.pages.views.page, {"slug": "/"}, name="home"),
+    url("^$", page, {"slug": "/"}, name="home"),
+
 
     # HOMEPAGE FOR A BLOG-ONLY SITE
     # -----------------------------
