@@ -79,7 +79,7 @@ from django.utils.translation import ugettext_lazy as _
 
 # Setting to turn on featured images for blog posts. Defaults to False.
 #
-# BLOG_USE_FEATURED_IMAGE = True
+BLOG_USE_FEATURED_IMAGE = True
 
 # If True, the django-modeltranslation will be added to the
 # INSTALLED_APPS setting.
@@ -324,6 +324,10 @@ if os.path.exists(f):
     sys.modules[module_name] = module
     exec(open(f, "rb").read())
 
+# Max upload file size
+# Size in byte, so 100000000 = 100 Mo
+
+FILEBROWSER_MAX_UPLOAD_SIZE = 100000000
 
 ####################
 # DYNAMIC SETTINGS #

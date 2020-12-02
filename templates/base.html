@@ -16,25 +16,12 @@
 {% endifinstalled %}
 
 {% compress css %}
-<link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
-<link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
-<link rel="stylesheet" href="{% static "css/bootstrap-theme.css" %}">
-{% if LANGUAGE_BIDI %}
-<link rel="stylesheet" href="{% static "css/bootstrap-rtl.css" %}">
-{% endif %}
-{% ifinstalled cartridge.shop %}
-<link rel="stylesheet" href="{% static "css/cartridge.css" %}">
-{% if LANGUAGE_BIDI %}
-<link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
-{% endif %}
-{% endifinstalled %}
+<link rel="stylesheet" href="{% static "css/styles.css" %}">
 {% block extra_css %}{% endblock %}
 {% endcompress %}
 
 {% compress js %}
 <script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
-<script src="{% static "js/bootstrap.js" %}"></script>
-<script src="{% static "js/bootstrap-extras.js" %}"></script>
 {% block extra_js %}{% endblock %}
 {% endcompress %}
 
@@ -46,16 +33,74 @@
 {% block extra_head %}{% endblock %}
 </head>
 
+
+
 <body id="{% block body_id %}body{% endblock %}">
 
+
+
+    <header class="App-header font-slim">
+        <nav class="flex items-center justify-between flex-wrap bg-bell p-6">
+            <div class="flex items-center flex-shrink-0 text-white mr-6">
+                <span class="font-slim text-xl tracking-tight">{% if settings.SITE_TITLE %}<a class="navbar-brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}</span>
+            {% if settings.SITE_TAGLINE %} <p class="navbar-text visible-lg">{{ settings.SITE_TAGLINE }}</p>{% endif %}
+            </div>
+            <div class="block lg:hidden">
+            <button
+                class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white"
+            >
+                <svg
+                class="fill-current h-3 w-3"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+                >
+                <title>Menu</title>
+                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+                </svg>
+            </button>
+            </div>
+            <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto"
+            >
+            <div class="text-sm lg:flex-grow">
+                <a href="#responsive-header"
+                class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+                >
+                {% block navbar_dropdown_menu %}{% page_menu "pages/menus/dropdown.html" %}{% endblock%}
+                </a>
+                <a
+                href="#responsive-header"
+                class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+                >
+                </a>
+                <a href="blog"
+                    class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
+                >
+                Blog
+                </a>
+            </div>
+            <div class="block">
+                {% block navbar_search_form %}{% search_form %}{% endblock %}
+            </div>
+            <div>
+                <a
+                href="#"
+                class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
+                >
+                    Login
+                </a>
+            </div>
+            
+            </div>
+        </nav>
+        </header>
+
+
+
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-<div class="container">
-<div class="navbar-header">
+
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="sr-only">{% trans "Toggle Navigation" %}</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+      
     </button>
     {% block navbar_title %}
     {% if settings.SITE_TITLE %}<a class="navbar-brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
@@ -63,10 +108,7 @@
     {% endblock%}
 </div>
 <div class="navbar-collapse collapse">
-    {% block navbar_search_form %}{% search_form "all" %}{% endblock %}
-    {% block navbar_dropdown_menu %}{% page_menu "pages/menus/dropdown.html" %}{% endblock%}
-</div>
-</div>
+
 </div>
 
 <div class="container">
@@ -138,7 +180,7 @@
     {% trans "and" %}
     <a href="http://www.djangoproject.com">Django</a>
     <span class="separator">|</span>
-    {% trans "Theme by" %} <a target="_blank" href="http://getbootstrap.com">Bootstrap</a>
+    {% trans "Theme by" %} <a target="_blank" href="https://tailwindcss.com">Tailwind</a>
 </p>
 </div>
 </div>
