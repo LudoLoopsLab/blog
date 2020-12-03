@@ -251,8 +251,8 @@ INSTALLED_APPS = (
     "mezzanine.blog",
     "mezzanine.forms",
     "mezzanine.galleries",
-    "mezzanine.twitter",
-    # "mezzanine.accounts",
+    # "mezzanine.twitter",
+    "mezzanine.accounts",
 )
 
 # List of middleware classes to use. Order is important; in the request phase,

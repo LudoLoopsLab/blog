@@ -48,15 +48,13 @@
     <p>
     {% if tag %}
         {% trans "Viewing posts tagged" %} {{ tag }}
-    {% else %}{% if category %}
-        {% trans "Viewing posts for the category" %} {{ category }}
     {% else %}{% if year or month %}
         {% trans "Viewing posts from" %} {% if month %}{{ month }}, {% endif %}
         {{ year }}
     {% else %}{% if author %}
         {% trans "Viewing posts by" %}
         {{ author.get_full_name|default:author.username }}
-    {% endif %}{% endif %}{% endif %}{% endif %}
+    {% endif %}{% endif %}{% endif %}
     {% endblock %}
     </p>
 {% else %}
@@ -76,7 +74,7 @@
     {% block blog_post_list_post_metainfo %}
     {% editable blog_post.publish_date %}
 
-    <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-8">
+    <div class="max-w-md bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-8">
         <div class="md:flex-shrink-0">
             <div class="md:flex">
                 {% if settings.BLOG_USE_FEATURED_IMAGE and blog_post.featured_image %}
@@ -164,9 +162,6 @@
 
 {% pagination_for blog_posts %}
 
-{% if settings.COMMENTS_DISQUS_SHORTNAME %}
-{% include "generic/includes/disqus_counts.html" %}
-{% endif %}
 
 {% endblock %}
 

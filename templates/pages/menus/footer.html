@@ -9,15 +9,15 @@
             <div class="nav-footer">
         {% endif %}
         {% if page.in_menu %}
-            <ul class="list-unstyled">
+            <ul class="flex">
         {% endif %}
     {% endif %}
 
     {% if page.in_menu %}
-        {% if forloop.first and not page.parent.in_menu and not page.is_primary %}
-            <ul class="list-unstyled">
-        {% endif %}
-        <li {% if page.is_current_or_ascendant %}class="active"{% endif %}
+       
+        <li       class="px-4    hover:text-gray-500          {% if page.is_current_or_ascendant %}
+                       bg-black bg-opacity-20
+                    {% endif %}"
             id="footer-menu-{{ page.html_id }}">
             <a href="{{ page.get_absolute_url }}">{{ page.title }}</a></li>
     {% endif %}
@@ -32,7 +32,7 @@
 
     {% if page.is_primary %}
         {% if page.in_menu %}
-            </ul>
+            {% comment %} </ul> {% endcomment %}
         {% endif %}
         {% if forloop.last %}
             </div>

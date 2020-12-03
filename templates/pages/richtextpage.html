@@ -5,7 +5,9 @@
 {% block main %}{{ block.super }}
 
 {% editable page.richtextpage.content %}
-{{ page.richtextpage.content|richtext_filters }}
+  <div class="p-8 max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-8">
+  {{ page.richtextpage.content|richtext_filters }}
+  </div>
 {% endeditable %}
 
 {% endblock %}
