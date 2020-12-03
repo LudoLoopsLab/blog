@@ -8,10 +8,8 @@ when it is configured as an editable page in the navigation tree. Feel
 free to modify it.
 -->
 
-  <div class="p-8 max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-8">
-    {{ block.super }}
-  </div>
-{% pagination_for blog_posts %}
+  {{ block.super }}
+  {% pagination_for blog_posts %}
 
 
 {% endblock %}
