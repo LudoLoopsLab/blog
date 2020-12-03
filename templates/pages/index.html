@@ -1,8 +1,156 @@
-{% extends "pages/richtextpage.html" %} {% block main %}
+{% extends "pages/richtextpage.html" %}
+{% load i18n mezzanine_tags blog_tags keyword_tags disqus_tags %}
 
+{% block main %}
 <!--
 This template is provided as a custom template for the homepage, for
 when it is configured as an editable page in the navigation tree. Feel
 free to modify it.
 -->
-{{ block.super }} {% endblock %}
+
+  <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-8">
+    {{ block.super }}
+    {% comment %} {% include "includes/blog_post_list.html" %} {% endcomment %}
+
+
+
+
+  </div>
+
+
+
+{% block main2 %}
+
+{% if tag or category or year or month or author %}
+    {% block blog_post_list_filterinfo %}
+    <p>
+    {% if tag %}
+        {% trans "Viewing posts tagged" %} {{ tag }}
+    {% else %}{% if category %}
+        {% trans "Viewing posts for the category" %} {{ category }}
+    {% else %}{% if year or month %}
+        {% trans "Viewing posts from" %} {% if month %}{{ month }}, {% endif %}
+        {{ year }}
+    {% else %}{% if author %}
+        {% trans "Viewing posts by" %}
+        {{ author.get_full_name|default:author.username }}
+    {% endif %}{% endif %}{% endif %}{% endif %}
+    {% endblock %}
+    </p>
+{% else %}
+    {% if page %}
+    {% block blog_post_list_pagecontent %}
+    {% if page.get_content_model.content %}
+        {% editable page.get_content_model.content %}
+        {{ page.get_content_model.content|richtext_filters }}
+        {% endeditable %}
+    {% endif %}
+    {% endblock %}
+    {% endif %}
+{% endif %}
+
+{% for blog_post in blog_posts.object_list %}
+
+    {% block blog_post_list_post_metainfo %}
+    {% editable blog_post.publish_date %}
+
+    <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-8">
+        <div class="md:flex-shrink-0">
+            <div class="md:flex">
+                {% if settings.BLOG_USE_FEATURED_IMAGE and blog_post.featured_image %}
+                    {% block blog_post_list_post_featured_image %}
+                        <a href="{{ blog_post.get_absolute_url }}">
+                            <img class="object-cover w-full" src="{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 700 300 %}">
+                        </a>
+                    {% endblock %}
+                {% endif %}
+            </div>
+            <div class="px-8">
+                <div class="flex justify-between my-2 text-blue-400 font-semibold text-sm">
+                    {% with blog_post.categories.all as categories %}
+                        {% if categories %}
+                        <div>
+                            {% for category in categories %}
+                                <a href="{% url "blog_post_list_category" category.slug %}" class="mr-2 hover:text-blue-700 focus:outline-none">{{ category }}</a>{% if not forloop.last %} {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    {% endwith %}
+                    {% block blog_post_list_post_links %}
+                        {% keywords_for blog_post as tags %}
+                            {% if tags %}
+                                <ul>
+                                    {% spaceless %}
+                                        {% for tag in tags %}
+                                            <li class="inline"><a href="{% url "blog_post_list_tag" tag.slug %}" class="hover:text-blue-700  focus:outline-none">#{{ tag }}</a>{% if not forloop.last %}, {% endif %}</li>
+                                        {% endfor %}
+                                    {% endspaceless %}
+                                </ul>
+                            {% endif %}
+                        {% endblock %}
+                </div>
+                    {% editable blog_post.title %}
+                        <a href="{{ blog_post.get_absolute_url }}" class="pl-4 uppercase tracking-wide text-xl  font-bold  hover:text-gray-500 block">{{ blog_post.title }}</a>
+                    {% endeditable %}
+                    <p class="mt-4">
+                        {% block blog_post_list_post_content %}
+                            {% editable blog_post.content %}
+                                {{ blog_post.description_from_content|safe }}
+                            {% endeditable %}
+                        {% endblock %}
+                    </p>
+                <div class="p-4 flex justify-between ">
+                    <span class="text-xs mt-1">
+                        {% with blog_post.user as author %}
+                        <p>
+                            <a href="{% url "blog_post_list_author" author %}" class="text-base font-bold">{{ author.get_full_name.|default:author.username }}</a>
+                        </p>
+                        {% endwith %}
+                        <p class="mt-2">
+                    {% blocktrans with sometime=blog_post.publish_date|timesince %}{{ sometime }} ago{% endblocktrans %}</p>
+                    </span>
+                    <div>
+                        <a href="{{ blog_post.get_absolute_url }}" class="p-2 bg-blue-500 text-white font-semibold text-sm rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ">
+                            Read more
+                        </a>
+                        <p class="text-sm mt-2 text-center">
+                            {% if blog_post.allow_comments %}
+                                    <a href="{{ blog_post.get_absolute_url }}#comments">
+                                        {% blocktrans count comments_count=blog_post.comments_count %}{{ comments_count }} comment{% plural %}{{ comments_count }} comments{% endblocktrans %}
+                                    </a>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                <div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endeditable %}
+{% endblock %}
+
+
+
+
+
+
+{% endfor %}
+
+{% pagination_for blog_posts %}
+
+{% if settings.COMMENTS_DISQUS_SHORTNAME %}
+{% include "generic/includes/disqus_counts.html" %}
+{% endif %}
+
+{% endblock %}
+
+
+
+
+{% endblock %}
+
+
+
+
