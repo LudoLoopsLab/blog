@@ -104,7 +104,9 @@
                                 <ul>
                                     {% spaceless %}
                                         {% for tag in tags %}
-                                            <li class="inline"><a href="{% url "blog_post_list_tag" tag.slug %}" class="hover:text-blue-700  focus:outline-none">#{{ tag }}</a>{% if not forloop.last %}, {% endif %}</li>
+                                            <li class="inline"><a href="{% url "blog_post_list_tag" tag.slug %}" class="hover:text-blue-400  focus:outline-none
+                                    px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-bell mr-1
+                                            ">#{{ tag }}</a></li>
                                         {% endfor %}
                                     {% endspaceless %}
                                 </ul>
@@ -132,7 +134,7 @@
                     {% blocktrans with sometime=blog_post.publish_date|timesince %}{{ sometime }} ago{% endblocktrans %}</p>
                     </span>
                     <div>
-                        <a href="{{ blog_post.get_absolute_url }}" class="p-2 bg-blue-500 text-white font-semibold text-sm rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ">
+                        <a href="{{ blog_post.get_absolute_url }}" class="p-2 bg-bell text-white font-semibold text-sm rounded-lg shadow-md hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-bell-400 focus:ring-opacity-75 ">
                             Read more
                         </a>
                         <p class="text-sm mt-2 text-center">
