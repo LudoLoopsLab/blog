@@ -95,10 +95,25 @@
                     <span class="text-xs">
                         {% trans "Posted by" %}:
                         {% with blog_post.user as author %}
-                            <a href="{% url "blog_post_list_author" author %}">
-                                {{ author.get_full_name|default:author.username }}
-                            </a>
+                            <a href="{% url "blog_post_list_author" author %}">{{ author.get_full_name|default:author.username }}</a>
                         {% endwith %}
+                    {% with blog_post.categories.all as categories %}
+                        {% if categories %}
+                            {% trans "in" %}
+                            {% for category in categories %}
+                                <a href="{% url "blog_post_list_category" category.slug %}">{{ category }}</a>{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    {% with blog_post.categories.all as categories %}
+                        {% if categories %}
+                            {% trans "in" %}
+                            {% for category in categories %}
+                                <a href="{% url "blog_post_list_category" category.slug %}">{{ category }}</a>{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    {% blocktrans with sometime=blog_post.publish_date|timesince %}{{ sometime }} ago{% endblocktrans %}
                     </span>
                 </div>
                 <p class="mt-2 text-gray-500">
@@ -108,50 +123,39 @@
                         {% endeditable %}
                     {% endblock %}
                 </p>
-                <div class="mt-4 w-full flex flex-row-reverse">
-                    <a href="{{ blog_post.get_absolute_url }}" class="p-2 bg-blue-500 text-white font-semibold text-sm rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
-                        Read more
-                    </a>
-                    <p class="mr-4 text-sm">
+                <div class="mt-2 grid grid-cols-3 gap-4 place-items-center">
+                    <div></div>
+                    <p class="text-sm place-self-end">
                         {% if blog_post.allow_comments %}
-                            {% if settings.COMMENTS_DISQUS_SHORTNAME %}
-                                <a href="{{ blog_post.get_absolute_url }}#disqus_thread" data-disqus-identifier="{% disqus_id_for blog_post %}">
-                                    {% trans "Comments" %}
-                                </a>
-                            {% else %}
                                 <a href="{{ blog_post.get_absolute_url }}#comments">
                                     {% blocktrans count comments_count=blog_post.comments_count %}{{ comments_count }} comment{% plural %}{{ comments_count }} comments{% endblocktrans %}
                                 </a>
-                            {% endif %}
                         {% endif %}
                     </p>
+                    <a href="{{ blog_post.get_absolute_url }}" class="p-2 bg-blue-500 text-white font-semibold text-sm rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+                        Read more
+                    </a>
+                </div>
+                <div>
+                    {% block blog_post_list_post_links %}
+                        <div class="text-xs">
+                            {% keywords_for blog_post as tags %}
+                            {% if tags %}
+                                <ul>
+                                    {% trans "Tags" %}:
+                                    {% spaceless %}
+                                        {% for tag in tags %}
+                                            <li class="inline"><a href="{% url "blog_post_list_tag" tag.slug %}" class="tag">{{ tag }}</a>{% if not forloop.last %}, {% endif %}</li>
+                                        {% endfor %}
+                                    {% endspaceless %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    {% endblock %}
                 </div>
             </div>
         </div>
     </div>
-<h6 class="post-meta">
-    {% trans "Posted by" %}:
-        {% with blog_post.user as author %}
-            <a href="{% url "blog_post_list_author" author %}">{{ author.get_full_name|default:author.username }}</a>
-        {% endwith %}
-    {% with blog_post.categories.all as categories %}
-        {% if categories %}
-            {% trans "in" %}
-            {% for category in categories %}
-                <a href="{% url "blog_post_list_category" category.slug %}">{{ category }}</a>{% if not forloop.last %}, {% endif %}
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-    {% with blog_post.categories.all as categories %}
-        {% if categories %}
-            {% trans "in" %}
-            {% for category in categories %}
-                <a href="{% url "blog_post_list_category" category.slug %}">{{ category }}</a>{% if not forloop.last %}, {% endif %}
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-    {% blocktrans with sometime=blog_post.publish_date|timesince %}{{ sometime }} ago{% endblocktrans %}
-</h6>
 {% endeditable %}
 {% endblock %}
 
@@ -159,25 +163,7 @@
 
 
 
-{% block blog_post_list_post_links %}
-<div class="blog-list-detail">
-    {% keywords_for blog_post as tags %}
-    {% if tags %}
-    <ul class="list-inline tags">
-    {% trans "Tags" %}:
-    {% spaceless %}
-    {% for tag in tags %}
-    <li><a href="{% url "blog_post_list_tag" tag.slug %}" class="tag">{{ tag }}</a>{% if not forloop.last %}, {% endif %}</li>
-    {% endfor %}
-    {% endspaceless %}
-    </ul>
-    {% endif %}
-    <p>
-    <a href="{{ blog_post.get_absolute_url }}">{% trans "read more" %}</a>
 
-    </p>
-</div>
-{% endblock %}
 {% endfor %}
 
 {% pagination_for blog_posts %}
