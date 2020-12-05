@@ -2,7 +2,7 @@
 
 # full_path=$(realpath $0)
 dir_path=$(dirname $(realpath $0))
-env_path=$(dirname $dir_path)/env/bin/activate
+env_path=$dir_path/env/bin/activate
 
 #echo "dir path:" $dir_path
 
