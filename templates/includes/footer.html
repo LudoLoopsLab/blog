@@ -1,10 +1,12 @@
 {% load mezzanine_tags i18n %}
 {% load pages_tags mezzanine_tags i18n staticfiles %}
 
-        <div class="grid grid-cols-2 p-4 ">
-        
-        {% page_menu "pages/menus/footer.html" %}
-
+        <div class="grid grid-cols-3 p-4 ">
+        <div class="col-span-2">
+    {% block navbar_dropdown_menu %}
+        {% page_menu "pages/menus/dropdown.html" %}
+    {% endblock%}
+</div>
             <p class="justify-self-end text-align-right">
                 {% trans "Powered by" %}
                 <a href="http://mezzanine.jupo.org">Mezzanine</a>
