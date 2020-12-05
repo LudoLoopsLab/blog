@@ -1,6 +1,6 @@
 {% load pages_tags mezzanine_tags i18n staticfiles %}
 
-<nav class="flex items-center justify-between flex-wrap bg-bell px-6 py-4">
+<nav class="flex items-center justify-between flex-wrap bg-bell px-6 py-4 sticky">
     <div class="flex items-center flex-shrink-0 text-white mr-6">
         <a class="navbar-brand" href="/">
             <span class="font-slim text-2xl tracking-tight mr-2">{% if settings.SITE_TITLE %}{{ settings.SITE_TITLE }}{% endif %}</span>
@@ -23,7 +23,7 @@
         </svg>
     </button>
     </div>
-    <div class="hidden  w-full block flex-grow md:contents lg:items-center lg:w-auto"
+    <div class="hidden w-full block flex-grow md:contents lg:items-center lg:w-auto"
     >
     <div class=" lg:flex-grow">
         {% block navbar_dropdown_menu %}{% page_menu "pages/menus/dropdown.html" %}{% endblock%}
@@ -31,11 +31,11 @@
     <div class="hidden xl:contents">
         {% block navbar_search_form %}{% search_form %}{% endblock %}
     </div>
-    {% comment %} <div>
+    <div>
         <a href="#"
-        class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-bell hover:bg-white mt-4 lg:mt-0"
+        class=""
         >
             {% include "includes/user_panel.html" %}
-    </div> {% endcomment %}
+    </div>
     </div>
 </nav>

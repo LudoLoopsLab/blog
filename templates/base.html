@@ -10,7 +10,6 @@
 
 
     <link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
-    <script src="https://kit.fontawesome.com/b21dcb6edd.js" crossorigin="anonymous"></script>
     {% ifinstalled mezzanine.blog %}
     <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
     <link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
@@ -37,12 +36,13 @@
 
 
 
-<body id="{% block body_id %}body{% endblock %}" class="bg-bellBg">
-    <header class="font-slim">
+<body id="{% block body_id %}body{% endblock %}" class="bg-bellBg min-h-full">
+
+    <header class="font-slim sticky">
         {% include "includes/navBar.html" %}
     </header>
 
-    <div class="grid grid-cols-4 ">
+    <div class="grid grid-cols-4">
         <div class="justify-self-center col-span-3">
             {% block main %}{% endblock %}
         </div>
@@ -52,7 +52,7 @@
             {% endnevercache %}
         </div>
     </div>
-    <footer class="bg-bell text-white  bottom-0">
+    <footer class="bg-bell text-white bottom-0">
         {% include "includes/footer.html" %}
     </footer>
 

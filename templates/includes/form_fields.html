@@ -10,9 +10,9 @@
 {% if field.is_hidden %}
 {{ field }}
 {% else %}
-<div class="form-group input_{{ field.id_for_label }} {{ field.field.type }}
+<div class="form-group input_{{ field.id_for_label }} {{ field.field.type }} 
     {% if field.errors %} has-error{% endif %}">
-    {% if field.label %}<label class="control-label" for="{{ field.auto_id }}">{{ field.label }}</label>{% endif %}
+    {% if field.label %}<label class="control-label" for="{{ field.auto_id }}" class="p-4">{{ field.label }}</label>{% endif %}
     {{ field }}
     {% if field.errors %}
     <p class="help-block">
@@ -23,7 +23,7 @@
     {% elif field.help_text %}
     <p class="help-block">{{ field.help_text }}</p>
     {% elif field.field.required %}
-    <p class="help-block">{% trans "required" %}</p>
+    {% comment %} <p class="help-block">{% trans "required" %}</p> {% endcomment %}
     {% endif %}
 </div>
 {% endif %}

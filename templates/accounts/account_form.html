@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n mezzanine_tags %}
+
+{% block meta_title %}{{ title }}{% endblock %}
+{% block title %}{{ title }}{% endblock %}
+{% block body_id %}account{% endblock %}
+
+{% block main %}
+
+{% errors_for form %}
+
+<form method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %} class="blogContainer p-4">
+    <fieldset >
+        <legend class="p-4">{{ title }}</legend>
+        {% fields_for form %}
+            {% block account_form_actions %}
+                <input class="btn-readMore m-4" type="submit" value="{{ title }}">
+            {% endblock %}
+    </fieldset>
+</form>
+{% endblock %}

@@ -74,7 +74,7 @@
     {% block blog_post_list_post_metainfo %}
     {% editable blog_post.publish_date %}
 
-    <div class="max-w-md bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-8">
+    <div class="blogContainer">
         <div class="md:flex-shrink-0">
             <div class="md:flex">
                 {% if settings.BLOG_USE_FEATURED_IMAGE and blog_post.featured_image %}
@@ -91,7 +91,7 @@
                         {% if categories %}
                         <div>
                             {% for category in categories %}
-                                <a href="{% url "blog_post_list_category" category.slug %}" class="mr-2 hover:text-blue-700 focus:outline-none">{{ category }}</a>{% if not forloop.last %} {% endif %}
+                                <a href="{% url "blog_post_list_category" category.slug %}" class="">{{ category }}</a>{% if not forloop.last %} {% endif %}
                             {% endfor %}
                         </div>
                         {% endif %}
@@ -102,8 +102,7 @@
                                 <ul>
                                     {% spaceless %}
                                         {% for tag in tags %}
-                                            <li class="inline"><a href="{% url "blog_post_list_tag" tag.slug %}" class="hover:text-blue-400  focus:outline-none
-                                    px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-bell mr-1
+                                            <li class="inline"><a href="{% url "blog_post_list_tag" tag.slug %}" class="tag
                                             ">#{{ tag }}</a></li>
                                         {% endfor %}
                                     {% endspaceless %}
@@ -132,7 +131,7 @@
                     {% blocktrans with sometime=blog_post.publish_date|timesince %}{{ sometime }} ago{% endblocktrans %}</p>
                     </span>
                     <div>
-                        <a href="{{ blog_post.get_absolute_url }}" class="p-2 bg-bell text-white font-semibold text-sm rounded-lg shadow-md hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-bell-400 focus:ring-opacity-75 ">
+                        <a href="{{ blog_post.get_absolute_url }}" class="btn-readMore">
                             Read more
                         </a>
                         <p class="text-sm mt-2 text-center">

@@ -5,9 +5,9 @@
         {% blog_categories as categories %}
             {% if categories %}
                 {% for category in categories %}
-                    <li class="px-3 py-2 rounded-lg hover:bg-black hover:bg-opacity-20 mr-1
+                    <li class="NavButton
                         {% if category.get_absolute_url == request.path %}
-                            active bg-black bg-opacity-20
+                            NavButton-active
                         {% endif %}">
                         <a href="{% url "blog_post_list_category" category.slug %}">
                         {{ category }}</a>
@@ -16,9 +16,9 @@
             {% endif %}
         {% for page in page_branch %}
             {% if page.in_menu %}
-                <li class="px-3 py-2 rounded-lg hover:bg-black hover:bg-opacity-20 mr-1
+                <li class="NavButton
                     {% if page.is_current_or_ascendant %}
-                        active bg-black bg-opacity-20
+                        NavButton-active
                     {% endif %}"
                     id="{{ page.html_id }}">
                     <a href="{{ page.get_absolute_url }}"
