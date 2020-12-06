@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 import os
 import sys
+<<<<<<< HEAD
+
+=======
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project_name.settings.local")
+>>>>>>> parent of 4fb5ddd (fix: deploy settings)
 
 if __name__ == "__main__":
 
