@@ -1,5 +1,5 @@
-
 from __future__ import absolute_import, unicode_literals
+import django_heroku
 import os
 
 from django import VERSION as DJANGO_VERSION
@@ -355,3 +355,4 @@ except ImportError:
     pass
 else:
     set_dynamic_settings(globals())
+django_heroku.settings(locals())
