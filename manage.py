@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import os
 import sys
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "BellBlog.settings.local")
+
 
 if __name__ == "__main__":
 
